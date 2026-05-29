@@ -1,0 +1,174 @@
+{
+  "cross_gsm8k": {
+    "method": "cross_eval",
+    "benchmark": "gsm8k",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "total": 8,
+    "avg_original_score": 0.375,
+    "avg_variant_score": 0.125,
+    "avg_performance_drop": 0.25,
+    "flagged_count": 2,
+    "flagged_pct": 25.0,
+    "results": [
+      {
+        "index": 0,
+        "question": "Janet\u2019s ducks lay 16 eggs per day. She eats three for breakfast every morning an",
+        "variant": "Maria's geese produce 24 eggs each day. Each morning, she consumes two eggs as p",
+        "orig_score": 0.0,
+        "var_score": 0.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 1,
+        "question": "A robe takes 2 bolts of blue fiber and half that much white fiber.  How many bol",
+        "variant": "A suit requires 3 bolts of dark fabric and a quarter as much light fabric. How m",
+        "orig_score": 1.0,
+        "var_score": 0.0,
+        "drop": 1.0,
+        "flagged": true
+      },
+      {
+        "index": 2,
+        "question": "Josh decides to try flipping a house.  He buys a house for $80,000 and then puts",
+        "variant": "Alex purchases a property for $90,000 and invests $60,000 in renovations. Conseq",
+        "orig_score": 0.0,
+        "var_score": 0.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 3,
+        "question": "James decides to run 3 sprints 3 times a week.  He runs 60 meters each sprint.  ",
+        "variant": "Alex decides to run 4 races 2 times a week. Each race involves running 50 meters",
+        "orig_score": 1.0,
+        "var_score": 0.0,
+        "drop": 1.0,
+        "flagged": true
+      },
+      {
+        "index": 4,
+        "question": "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed, co",
+        "variant": "Every day, Alex distributes a mixture of feed to his chickens, which includes gr",
+        "orig_score": 1.0,
+        "var_score": 1.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 5,
+        "question": "Kylar went to the store to buy glasses for his new apartment. One glass costs $5",
+        "variant": "Alex decided to furnish his newly acquired house. He bought a set of glasses whi",
+        "orig_score": 0.0,
+        "var_score": 0.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 6,
+        "question": "Toulouse has twice as many sheep as Charleston. Charleston has 4 times as many s",
+        "variant": "A town named Eldorado has three times as many goats as a village called Willow C",
+        "orig_score": 0.0,
+        "var_score": 0.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 7,
+        "question": "Carla is downloading a 200 GB file. Normally she can download 2 GB/minute, but 4",
+        "variant": "Maria is downloading a 300 GB file. Typically, she can download 3 GB/minute, but",
+        "orig_score": 0.0,
+        "var_score": 0.0,
+        "drop": 0.0,
+        "flagged": false
+      }
+    ],
+    "contamination_index": 25.0
+  },
+  "cross_mmlu_elementary_mathematics": {
+    "method": "cross_eval",
+    "benchmark": "mmlu",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "total": 8,
+    "avg_original_score": 0.875,
+    "avg_variant_score": 0.417,
+    "avg_performance_drop": 0.458,
+    "flagged_count": 4,
+    "flagged_pct": 50.0,
+    "results": [
+      {
+        "index": 0,
+        "question": "What is the value of p in 24 = 2p?",
+        "variant": "Determine the value of q in 36 = 3q? To ensure the math and logic remain identic",
+        "orig_score": 1.0,
+        "var_score": 0.0,
+        "drop": 1.0,
+        "flagged": true
+      },
+      {
+        "index": 1,
+        "question": "Ms. Perez drove a total of 40 miles in 5 days. She drove the same number of mile",
+        "variant": "Mrs. Williams traveled a cumulative distance of 60 kilometers over 7 days. If sh",
+        "orig_score": 1.0,
+        "var_score": 1.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 2,
+        "question": "Find the quotient of \u221240 \u00f7 (\u22128).",
+        "variant": "Calculate the result of \u221260 divided by (\u221210). To rewrite the original question w",
+        "orig_score": 1.0,
+        "var_score": 1.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 3,
+        "question": "A soccer team has $90.00 to buy soccer balls. If one soccer ball costs $15.60, w",
+        "variant": "A basketball squad possesses $85.50 to purchase basketballs. Should each ball co",
+        "orig_score": 1.0,
+        "var_score": 1.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 4,
+        "question": "You and three friends go to a concert. The total cost for four tickets is $112. ",
+        "variant": "Four friends, including yourself, attend a play. They collectively spend $144 on",
+        "orig_score": 1.0,
+        "var_score": 0.333,
+        "drop": 0.667,
+        "flagged": true
+      },
+      {
+        "index": 5,
+        "question": "Use the expression below to answer the question. 3 \u00d7 [(2 \u00d7 6 \u2013 5) + (8 \u00f7 4)] \u2013 1",
+        "variant": "Calculate the value of the following expression using the given formula. 4 \u00d7 [((",
+        "orig_score": 0.0,
+        "var_score": 0.0,
+        "drop": 0.0,
+        "flagged": false
+      },
+      {
+        "index": 6,
+        "question": "Write 1 and 1 over 11 as a whole or mixed number in simplest form.",
+        "variant": "Express 2 and 1 over 23 as a single or composite fraction in its most basic stat",
+        "orig_score": 1.0,
+        "var_score": 0.0,
+        "drop": 1.0,
+        "flagged": true
+      },
+      {
+        "index": 7,
+        "question": "Find the quotient of 2.16 \u00f7 0.06.",
+        "variant": "Determine the result of dividing 3.48 by 0.04.",
+        "orig_score": 1.0,
+        "var_score": 0.0,
+        "drop": 1.0,
+        "flagged": true
+      }
+    ],
+    "contamination_index": 45.8
+  }
+}
