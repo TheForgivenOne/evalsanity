@@ -6,100 +6,192 @@
 <title>EvalSanity — Contamination Leaderboard</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
-  .container { max-width: 960px; margin: 0 auto; padding: 2rem; }
-  h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #f8fafc; }
-  .subtitle { color: #94a3b8; margin-bottom: 2rem; }
-  .card { background: #1e293b; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #334155; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #0b1120; color: #e2e8f0; line-height: 1.6; }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  header { text-align: center; padding: 3rem 0 2rem; }
+  h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; }
+  .tagline { color: #64748b; font-size: 1.1rem; margin-top: 0.5rem; }
+  .subtitle { color: #94a3b8; font-size: 0.95rem; }
+  .card { background: #1a2332; border-radius: 16px; padding: 1.75rem; margin-bottom: 1.5rem; border: 1px solid #1e293b; transition: border-color 0.2s; }
+  .card:hover { border-color: #334155; }
+  .card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; color: #f1f5f9; }
   table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
-  th { color: #94a3b8; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  th, td { padding: 0.85rem 1rem; text-align: left; border-bottom: 1px solid #1e293b; }
+  th { color: #64748b; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
   td { font-size: 0.95rem; }
-  .high { color: #ef4444; font-weight: 700; }
+  tr:last-child td { border-bottom: none; }
+  .high { color: #ef4444; font-weight: 700; font-size: 1.05rem; }
   .medium { color: #f59e0b; font-weight: 700; }
   .low { color: #22c55e; font-weight: 700; }
-  .bar-container { background: #334155; border-radius: 4px; height: 20px; overflow: hidden; }
-  .bar { height: 100%; border-radius: 4px; transition: width 0.5s; }
-  .bar-high { background: #ef4444; }
-  .bar-medium { background: #f59e0b; }
-  .bar-low { background: #22c55e; }
-  img { max-width: 100%; border-radius: 8px; margin-top: 1rem; }
-  .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-  .badge-high { background: #ef444420; color: #ef4444; border: 1px solid #ef4444; }
-  .badge-medium { background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b; }
-  .footer { color: #64748b; font-size: 0.85rem; margin-top: 2rem; text-align: center; }
-  a { color: #60a5fa; }
+  .badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .badge-high { background: #ef444415; color: #ef4444; border: 1px solid #ef444430; }
+  .badge-medium { background: #f59e0b15; color: #f59e0b; border: 1px solid #f59e0b30; }
+  .badge-low { background: #22c55e15; color: #22c55e; border: 1px solid #22c55e30; }
+  .chart-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .chart-grid img { width: 100%; border-radius: 8px; border: 1px solid #1e293b; }
+  .footer { color: #475569; font-size: 0.85rem; margin-top: 3rem; padding-bottom: 2rem; text-align: center; border-top: 1px solid #1e293b; padding-top: 2rem; }
+  .footer a { color: #60a5fa; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .btn { display: inline-block; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; margin: 0.25rem; }
+  .btn-primary { background: #3b82f6; color: white; }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-secondary { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+  .btn-secondary:hover { background: #334155; }
+  .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .stat-card { flex: 1; min-width: 140px; background: #1a2332; border: 1px solid #1e293b; border-radius: 12px; padding: 1.25rem; text-align: center; }
+  .stat-card .value { font-size: 1.8rem; font-weight: 800; color: #f1f5f9; }
+  .stat-card .label { font-size: 0.8rem; color: #64748b; margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
+  .method-card { background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 1rem; }
+  .method-card h3 { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; margin-bottom: 0.4rem; }
+  .method-card p { font-size: 0.85rem; color: #64748b; }
+  .highlight-box { background: #172554; border: 1px solid #1d4ed8; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  .highlight-box strong { color: #60a5fa; }
+  ul { color: #94a3b8; margin-left: 1.25rem; }
+  ul li { margin-bottom: 0.4rem; }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.8rem; }
+    .stats-row { flex-direction: column; }
+    .stat-card { min-width: auto; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>EvalSanity Contamination Leaderboard</h1>
-  <p class="subtitle">Cross-evaluation results: accuracy on original benchmark questions vs. semantically equivalent rewordings. A significant drop indicates contamination.</p>
 
-  <div class="card">
-    <h2>Model: Qwen2.5-7B-Instruct</h2>
-    <p class="subtitle">Evaluated May 2026 · 4-bit quantized · 2× Tesla T4</p>
+<header>
+  <h1>EvalSanity</h1>
+  <p class="tagline">Contamination-Resistant ML Evaluation Framework</p>
+  <div style="margin-top: 1.5rem;">
+    <a href="https://github.com/TheForgivenOne/evalsanity" class="btn btn-primary">GitHub</a>
+    <a href="#findings" class="btn btn-secondary">Findings</a>
+    <a href="#methodology" class="btn btn-secondary">Methodology</a>
+  </div>
+</header>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Benchmark</th>
-          <th>Original</th>
-          <th>Variant</th>
-          <th>Drop</th>
-          <th>Risk</th>
-          <th>Samples</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>MMLU Elementary Mathematics</strong></td>
-          <td>87.5%</td>
-          <td>31.2%</td>
-          <td><span class="high">56.2%</span></td>
-          <td><span class="badge badge-high">HIGH</span></td>
-          <td>8</td>
-        </tr>
-        <tr>
-          <td><strong>GSM8K</strong></td>
-          <td>37.5%</td>
-          <td>12.5%</td>
-          <td><span class="medium">25.0%</span></td>
-          <td><span class="badge badge-medium">MEDIUM</span></td>
-          <td>8</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="value" style="color: #ef4444;">56.2%</div>
+    <div class="label">Max Contamination</div>
+  </div>
+  <div class="stat-card">
+    <div class="value" style="color: #f59e0b;">25.0%</div>
+    <div class="label">Avg Contamination</div>
+  </div>
+  <div class="stat-card">
+    <div class="value" style="color: #60a5fa;">2</div>
+    <div class="label">Benchmarks Tested</div>
+  </div>
+  <div class="stat-card">
+    <div class="value" style="color: #a78bfa;">1</div>
+    <div class="label">Models Evaluated</div>
+  </div>
+</div>
+
+<div class="card" id="findings">
+  <h2>Findings: Qwen2.5-7B-Instruct</h2>
+  <p class="subtitle" style="margin-bottom: 1rem;">Evaluated May 2026 · Cross-evaluation with dedicated 3B generator</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Benchmark</th>
+        <th>Original</th>
+        <th>Variant</th>
+        <th>Drop</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>MMLU Elementary Math</strong></td>
+        <td>87.5%</td>
+        <td>31.2%</td>
+        <td><span class="high">56.2%</span></td>
+        <td><span class="badge badge-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>GSM8K</strong></td>
+        <td>37.5%</td>
+        <td>12.5%</td>
+        <td><span class="medium">25.0%</span></td>
+        <td><span class="badge badge-medium">MEDIUM</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box" style="margin-top: 1rem;">
+    <strong>Key insight:</strong> MMLU Elementary Mathematics loses <strong>56.2%</strong> accuracy when questions are reworded. Over half of the model's "correct" answers on this benchmark may be attributed to memorization rather than genuine reasoning.
+  </div>
+</div>
+
+<div class="card">
+  <h2>Visualization</h2>
+  <div class="chart-grid">
+    <img src="contamination_chart.png" alt="Contamination comparison chart showing original vs variant accuracy for GSM8K and MMLU Elementary Math">
+    <img src="contamination_detail.png" alt="Per-sample breakdown of cross-evaluation results">
+  </div>
+</div>
+
+<div class="card" id="methodology">
+  <h2>Methodology: Cross-Evaluation</h2>
+
+  <div class="method-grid">
+    <div class="method-card">
+      <h3>1. Load Benchmark</h3>
+      <p>Fetch original questions from Hugging Face datasets (GSM8K, MMLU, etc.)</p>
+    </div>
+    <div class="method-card">
+      <h3>2. Generate Variants</h3>
+      <p>Reword each question using a dedicated 3B LLM; validate semantic similarity (≥0.60) with all-MiniLM-L6-v2</p>
+    </div>
+    <div class="method-card">
+      <h3>3. Evaluate Both</h3>
+      <p>Run target model on original and variant questions; compare answers to ground truth</p>
+    </div>
+    <div class="method-card">
+      <h3>4. Compute Drop</h3>
+      <p>Accuracy drop &gt;30% → sample flagged as potentially contaminated</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>Visualization</h2>
-    <img src="../contamination_chart.png" alt="Contamination chart">
-    <img src="../contamination_detail.png" alt="Per-sample breakdown">
-  </div>
+  <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 1rem;">
+    <strong>Contamination Index</strong> = (Original Accuracy − Variant Accuracy) × 100
+  </p>
+</div>
 
-  <div class="card">
-    <h2>Methodology</h2>
-    <p><strong>Cross-Evaluation:</strong> Each benchmark question is reworded by a dedicated Qwen2.5-3B-Instruct model (loaded separately on GPU 1). The reworded variant preserves meaning and difficulty while changing surface form (names, numbers, entities, phrasing). Semantic similarity is validated via all-MiniLM-L6-v2 (threshold 0.60–0.95). The target model then answers both original and variant questions. A performance drop >30% flags the sample as potentially contaminated.</p>
-    <br>
-    <p>Contamination Index = (Original Accuracy − Variant Accuracy) × 100</p>
-  </div>
+<div class="card">
+  <h2>Why Cross-Evaluation Works</h2>
+  <p style="color: #94a3b8;">
+    A contaminated model has memorized the <em>surface form</em> of benchmark questions. When the same question is reworded — names changed, numbers swapped, phrasing restructured — the memorized pattern no longer triggers, and the model must actually reason. The performance drop directly quantifies how much of the original score was due to memorization vs. genuine capability.
+  </p>
+  <br>
+  <p style="color: #94a3b8;">
+    <strong>Perplexity</strong> and <strong>n-gram overlap</strong> alone are insufficient. In our experiments, perplexity flagged <em>zero</em> samples despite strong cross-evaluation evidence of contamination — the signal is semantic, not statistical.
+  </p>
+</div>
 
-  <div class="card">
-    <h2>Coming Soon</h2>
-    <ul style="color: #94a3b8; margin-left: 1.5rem;">
-      <li>Multi-model comparison (Llama-3.1-8B, Mistral-7B, Gemma-2-9B, Phi-3, DeepSeek-7B)</li>
-      <li>50+ samples per benchmark</li>
-      <li>More benchmarks (ARC, HellaSwag, TruthfulQA, MMLU-Pro)</li>
-      <li>Interactive leaderboard with filters</li>
-    </ul>
-  </div>
+<div class="card">
+  <h2>Coming Soon</h2>
+  <ul>
+    <li>Multi-model comparison: Llama-3.1-8B, Mistral-7B, Gemma-2-9B, Phi-3-Medium, DeepSeek-7B</li>
+    <li>50+ samples per benchmark for statistical significance</li>
+    <li>More benchmarks: ARC, HellaSwag, TruthfulQA, MMLU-Pro, HumanEval</li>
+    <li>Interactive leaderboard with model/benchmark filters</li>
+    <li>arXiv preprint</li>
+  </ul>
+</div>
 
-  <div class="footer">
-    <a href="https://github.com/TheForgivenOne/evalsanity">GitHub</a> · 
-    <a href="https://pypi.org/project/evalsanity/">PyPI</a> · 
-    Built with EvalSanity
-  </div>
+<div class="footer">
+  <a href="https://github.com/TheForgivenOne/evalsanity">GitHub</a>
+  &nbsp;·&nbsp;
+  <a href="https://pypi.org/project/evalsanity/">PyPI</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/TheForgivenOne/evalsanity/blob/main/FINDINGS.md">Full Findings</a>
+  <br><br>
+  Built with EvalSanity · MIT License
+</div>
+
 </div>
 </body>
 </html>
